@@ -67,12 +67,18 @@ personal-expense-advisor/
 
 ### Option 1: Web UI (Recommended)
 
-Run the web interface:
+**First time setup:**
+```bash
+python init_db.py
+```
+
+**Run the web interface:**
 ```bash
 python app.py
 ```
 
-Then open your browser to: `http://localhost:8000`
+The application will automatically find an available port and display the URL.
+Then open your browser to the displayed URL (usually `http://localhost:8000` or `http://localhost:8001`)
 
 **Web UI Features:**
 - Beautiful chat interface with AI agent

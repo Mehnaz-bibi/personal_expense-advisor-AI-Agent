@@ -7,10 +7,9 @@ import sys
 import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from agent import get_agent
 from tools import (
     get_expenses_today,
@@ -28,12 +27,19 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Mount static files and templates
+# Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
 
 # Initialize agent
 agent = get_agent()
+
+# Initialize database on startup
+try:
+    from database import get_database
+    db = get_database()
+    print("Database initialized successfully")
+except Exception as e:
+    print(f"Warning: Database initialization failed: {e}")
 
 
 class ExpenseRequest(BaseModel):
@@ -48,9 +54,18 @@ class BudgetRequest(BaseModel):
 
 # API Endpoints
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
+async def home():
     """Render the main interface."""
-    return templates.TemplateResponse("index.html", {"request": request})
+    try:
+        with open("templates/index.html", "r", encoding="utf-8") as f:
+            html_content = f.read()
+            # Replace the static file paths to work with the mounted static files
+            return html_content
+    except FileNotFoundError:
+        return """
+        <h1>Template not found</h1>
+        <p>Please ensure templates/index.html exists in the project directory.</p>
+        """
 
 
 @app.post("/api/chat")
@@ -111,4 +126,44 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    import webbrowser
+    import threading
+    import time
+
+    def open_browser(port):
+        """Open browser after a short delay."""
+        time.sleep(3)  # Wait for server to start
+        url = f"http://127.0.0.1:{port}"
+        print(f"✓ Opening browser at {url}")
+        try:
+            webbrowser.open(url)
+        except Exception as e:
+            print(f"Could not open browser automatically: {e}")
+            print(f"Please manually open: {url}")
+
+    # Try port 8000 first, then 8001, 8002, etc.
+    for port in [8000, 8001, 8002, 8003, 8080, 3000]:
+        try:
+            print("=" * 60)
+            print("Personal Expense Advisor - Web Server")
+            print("=" * 60)
+            print(f"✓ Starting server on port {port}...")
+            print(f"✓ Server will be available at: http://127.0.0.1:{port}")
+            print(f"✓ Opening browser automatically...")
+            print("=" * 60)
+
+            # Open browser in a separate thread
+            browser_thread = threading.Thread(target=open_browser, args=(port,))
+            browser_thread.daemon = True
+            browser_thread.start()
+
+            # Start the server
+            uvicorn.run(app, host="127.0.0.1", port=port)
+            break
+        except OSError as e:
+            if "address already in use" in str(e) or "only one usage" in str(e):
+                print(f"✗ Port {port} is already in use, trying next port...")
+                continue
+            else:
+                print(f"✗ Error starting server: {e}")
+                break
