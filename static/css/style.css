@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     padding: 20px;
     color: #17202A;
@@ -25,18 +25,10 @@ body {
 }
 
 header {
-    background: linear-gradient(90deg, #ff6b6b 0%, #feca57 20%, #48dbfb 40%, #ff9ff3 60%, #54a0ff 80%, #5f27cd 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 40px 30px;
     text-align: center;
-    animation: rainbow-bg 10s ease infinite;
-    background-size: 400% 400%;
-}
-
-@keyframes rainbow-bg {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 header h1 {
@@ -108,18 +100,10 @@ main {
 }
 
 .message.user {
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     margin-left: auto;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-    animation: rainbow-message 6s ease infinite;
-    background-size: 200% 200%;
-}
-
-@keyframes rainbow-message {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .message.agent {
@@ -159,13 +143,13 @@ main {
 }
 
 .input-section input:focus {
-    border-color: #0F766E;
-    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .input-section button {
     padding: 18px 35px;
-    background: linear-gradient(90deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -173,20 +157,13 @@ main {
     font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-    animation: rainbow-button 5s ease infinite;
-    background-size: 200% 200%;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .input-section button:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-}
-
-@keyframes rainbow-button {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .input-section button:active {
@@ -201,15 +178,13 @@ main {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 30px;
     border-radius: 18px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
     transition: transform 0.3s ease;
-    animation: rainbow-card 8s ease infinite;
-    background-size: 200% 200%;
 }
 
 .stat-card:hover {
@@ -217,22 +192,14 @@ main {
 }
 
 .stat-card:nth-child(2) {
-    background: linear-gradient(135deg, #48dbfb 0%, #ff9ff3 100%);
-    box-shadow: 0 10px 30px rgba(72, 219, 251, 0.3);
-    animation-delay: 2s;
+    background: linear-gradient(135deg, #48dbfb 0%, #5f27cd 100%);
+    box-shadow: 0 10px 30px rgba(72, 219, 251, 0.2);
 }
 
 .stat-card:nth-child(3) {
-    background: linear-gradient(135deg, #54a0ff 0%, #5f27cd 100%);
+    background: linear-gradient(135deg, #00d2d3 0%, #3a7bd5 100%);
     color: white;
-    box-shadow: 0 10px 30px rgba(84, 160, 255, 0.3);
-    animation-delay: 4s;
-}
-
-@keyframes rainbow-card {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    box-shadow: 0 10px 30px rgba(0, 210, 211, 0.2);
 }
 
 .stat-card h3 {
@@ -273,10 +240,10 @@ main {
 }
 
 .quick-btn:hover {
-    background: #ECFDF5;
-    border-color: #0F766E;
+    background: #f8f9fa;
+    border-color: #667eea;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.2);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
 .quick-btn:active {
@@ -284,25 +251,17 @@ main {
 }
 
 .reset-btn {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%) !important;
-    border-color: #ff6b6b !important;
-    color: white !important;
+    background: #fff5f5 !important;
+    border-color: #fed7d7 !important;
+    color: #c53030 !important;
     font-weight: 700 !important;
-    animation: rainbow-reset 6s ease infinite !important;
-    background-size: 200% 200% !important;
 }
 
 .reset-btn:hover {
-    background: linear-gradient(135deg, #ee5a24 0%, #c0392b 100%) !important;
-    border-color: #c0392b !important;
-    color: white !important;
+    background: #fed7d7 !important;
+    border-color: #fc8181 !important;
+    color: #9b2c2c !important;
     transform: translateY(-2px) !important;
-}
-
-@keyframes rainbow-reset {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 footer {
@@ -390,28 +349,20 @@ footer {
 
 /* AI Insights Section */
 .ai-insights {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-    border-left: 4px solid #fdcb6e;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-left: 4px solid #667eea;
     padding: 15px 20px;
     margin-bottom: 20px;
     border-radius: 8px;
-    animation: rainbow-insights 7s ease infinite;
-    background-size: 200% 200%;
 }
 
 .ai-insights h4 {
-    color: #e17055;
+    color: #667eea;
     margin-bottom: 10px;
     font-size: 1.1em;
 }
 
 .ai-insights p {
-    color: #2d3436;
+    color: #17202A;
     line-height: 1.6;
-}
-
-@keyframes rainbow-insights {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
