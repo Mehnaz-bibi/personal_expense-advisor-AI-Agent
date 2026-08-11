@@ -1,0 +1,30 @@
+# Personal Expense Advisor - Requirements
+
+# Database
+sqlite3
+
+# LLM Integration (choose one)
+# For Gemini API (Google)
+google-generativeai>=0.3.0
+
+# For Ollama (local)
+# ollama
+
+# For OpenAI API
+# openai>=1.0.0
+
+# For Anthropic API
+# anthropic
+
+# Environment variables
+python-dotenv
+
+# Agent framework (optional)
+# langchain>=0.1.0
+
+# Date handling
+python-dateutil
+
+# Testing (optional)
+# pytest
+# pytest-cov
