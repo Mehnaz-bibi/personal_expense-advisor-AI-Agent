@@ -124,7 +124,10 @@ async def reset_memory():
     try:
         from tools import clear_memory
         result = clear_memory()
-        return {"success": True, "data": result}
+        if result["success"]:
+            return {"success": True, "message": result["message"]}
+        else:
+            return {"success": False, "error": result.get("error", "Unknown error")}
     except Exception as e:
         return {"success": False, "error": str(e)}
 

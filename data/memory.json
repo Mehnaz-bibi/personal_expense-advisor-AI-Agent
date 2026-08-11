@@ -10,9 +10,30 @@
     "last_category": null,
     "recent_amounts": [],
     "common_categories": {},
-    "conversation_count": 0
+    "conversation_count": 4
   },
-  "history": [],
+  "history": [
+    {
+      "timestamp": "2026-08-11T15:41:33.463034",
+      "user": "my budget is 30000",
+      "agent": "You have used 91.7% of your budget. Only Rs. 2,500.00 remaining."
+    },
+    {
+      "timestamp": "2026-08-11T15:42:42.267547",
+      "user": "my budget is 2000",
+      "agent": "You have exceeded your budget by Rs. 25,500.00"
+    },
+    {
+      "timestamp": "2026-08-11T15:45:54.470872",
+      "user": "my budgt is 2000",
+      "agent": "I'm your Personal Expense Advisor. I can help you:\n\n\u2022 Add expenses (e.g., \"I spent 500 on lunch\")\n\u2022 Check your spending (e.g., \"How much did I spend this month?\")\n\u2022 Budget tracking (e.g., \"My budget is 40000\")\n\u2022 Set default budget (e.g., \"Set my budget to 40000\")\n\u2022 Analyze patterns (e.g., \"Where am I spending the most?\")\n\u2022 Get suggestions (e.g., \"Give me some money-saving tips\")\n\u2022 Clear memory (e.g., \"Clear my conversation history\")\n\nWhat would you like to do?"
+    },
+    {
+      "timestamp": "2026-08-11T15:46:21.729660",
+      "user": "my budget is 200000",
+      "agent": "You are within budget. Rs. 172,500.00 remaining (13.8% used)."
+    }
+  ],
   "user_profile": {
     "name": null,
     "location": null,
