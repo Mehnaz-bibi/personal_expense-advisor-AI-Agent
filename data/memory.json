@@ -7,9 +7,14 @@
     "language": "en"
   },
   "context": {
-    "last_category": null,
-    "recent_amounts": [],
-    "common_categories": {},
+    "last_category": "other",
+    "recent_amounts": [
+      1.0,
+      10.0
+    ],
+    "common_categories": {
+      "other": 2
+    },
     "conversation_count": 0
   },
   "history": [],

@@ -129,7 +129,9 @@ async def reset_memory():
         else:
             return {"success": False, "error": result.get("error", "Unknown error")}
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        import traceback
+        error_details = f"{str(e)}\n{traceback.format_exc()}"
+        return {"success": False, "error": error_details}
 
 
 @app.get("/health")

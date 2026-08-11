@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #F7FAF9;
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
     min-height: 100vh;
     padding: 20px;
     color: #17202A;
@@ -17,17 +17,26 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     overflow: hidden;
+    backdrop-filter: blur(10px);
 }
 
 header {
-    background: linear-gradient(135deg, #0F766E 0%, #115E59 100%);
+    background: linear-gradient(90deg, #ff6b6b 0%, #feca57 20%, #48dbfb 40%, #ff9ff3 60%, #54a0ff 80%, #5f27cd 100%);
     color: white;
     padding: 40px 30px;
     text-align: center;
+    animation: rainbow-bg 10s ease infinite;
+    background-size: 400% 400%;
+}
+
+@keyframes rainbow-bg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 header h1 {
@@ -99,10 +108,18 @@ main {
 }
 
 .message.user {
-    background: linear-gradient(135deg, #0F766E 0%, #115E59 100%);
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
     color: white;
     margin-left: auto;
-    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    animation: rainbow-message 6s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes rainbow-message {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .message.agent {
@@ -148,7 +165,7 @@ main {
 
 .input-section button {
     padding: 18px 35px;
-    background: #0F766E;
+    background: linear-gradient(90deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -156,13 +173,20 @@ main {
     font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    animation: rainbow-button 5s ease infinite;
+    background-size: 200% 200%;
 }
 
 .input-section button:hover {
-    background: #115E59;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(15, 118, 110, 0.4);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+@keyframes rainbow-button {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .input-section button:active {
@@ -177,13 +201,15 @@ main {
 }
 
 .stat-card {
-    background: #0F766E;
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
     color: white;
     padding: 30px;
     border-radius: 18px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(15, 118, 110, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
     transition: transform 0.3s ease;
+    animation: rainbow-card 8s ease infinite;
+    background-size: 200% 200%;
 }
 
 .stat-card:hover {
@@ -191,14 +217,22 @@ main {
 }
 
 .stat-card:nth-child(2) {
-    background: #14B8A6;
-    box-shadow: 0 10px 30px rgba(20, 184, 166, 0.2);
+    background: linear-gradient(135deg, #48dbfb 0%, #ff9ff3 100%);
+    box-shadow: 0 10px 30px rgba(72, 219, 251, 0.3);
+    animation-delay: 2s;
 }
 
 .stat-card:nth-child(3) {
-    background: #DFF7F1;
-    color: #0F766E;
-    box-shadow: 0 10px 30px rgba(223, 247, 241, 0.4);
+    background: linear-gradient(135deg, #54a0ff 0%, #5f27cd 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(84, 160, 255, 0.3);
+    animation-delay: 4s;
+}
+
+@keyframes rainbow-card {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .stat-card h3 {
@@ -250,17 +284,25 @@ main {
 }
 
 .reset-btn {
-    background: #FFF5F5 !important;
-    border-color: #FED7D7 !important;
-    color: #C53030 !important;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%) !important;
+    border-color: #ff6b6b !important;
+    color: white !important;
     font-weight: 700 !important;
+    animation: rainbow-reset 6s ease infinite !important;
+    background-size: 200% 200% !important;
 }
 
 .reset-btn:hover {
-    background: #FED7D7 !important;
-    border-color: #FC8181 !important;
-    color: #9B2C2C !important;
+    background: linear-gradient(135deg, #ee5a24 0%, #c0392b 100%) !important;
+    border-color: #c0392b !important;
+    color: white !important;
     transform: translateY(-2px) !important;
+}
+
+@keyframes rainbow-reset {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 footer {
@@ -348,20 +390,28 @@ footer {
 
 /* AI Insights Section */
 .ai-insights {
-    background: #FFF7E6;
-    border-left: 4px solid #F59E0B;
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    border-left: 4px solid #fdcb6e;
     padding: 15px 20px;
     margin-bottom: 20px;
     border-radius: 8px;
+    animation: rainbow-insights 7s ease infinite;
+    background-size: 200% 200%;
 }
 
 .ai-insights h4 {
-    color: #F59E0B;
+    color: #e17055;
     margin-bottom: 10px;
     font-size: 1.1em;
 }
 
 .ai-insights p {
-    color: #17202A;
+    color: #2d3436;
     line-height: 1.6;
+}
+
+@keyframes rainbow-insights {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
