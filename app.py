@@ -120,10 +120,10 @@ async def get_analysis():
 
 @app.post("/api/reset-memory")
 async def reset_memory():
-    """Reset user memory."""
+    """Reset everything - clear memory and all expenses."""
     try:
-        from tools import clear_memory
-        result = clear_memory()
+        from tools import reset_everything
+        result = reset_everything()
         if result["success"]:
             return {"success": True, "message": result["message"]}
         else:

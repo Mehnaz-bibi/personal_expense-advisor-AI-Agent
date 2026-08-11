@@ -542,6 +542,38 @@ def clear_memory() -> Dict:
         }
 
 
+def reset_everything() -> Dict:
+    """
+    Reset everything - clear memory and all expenses from database.
+
+    Returns:
+        Dictionary with success status
+    """
+    try:
+        # Clear memory
+        memory = get_memory_manager()
+        memory.clear_history()
+
+        # Clear all expenses from database
+        db = get_database()
+        all_expenses = db.get_expenses()
+
+        deleted_count = 0
+        for expense in all_expenses:
+            db.delete_expense(expense["id"])
+            deleted_count += 1
+
+        return {
+            "success": True,
+            "message": f"Reset complete! Cleared {deleted_count} expenses and conversation history."
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to reset everything: {str(e)}"
+        }
+
+
 # Tool metadata for function calling
 TOOLS_METADATA = [
     {
@@ -619,6 +651,11 @@ TOOLS_METADATA = [
     {
         "name": "clear_memory",
         "description": "Clear conversation history from memory",
+        "parameters": {}
+    },
+    {
+        "name": "reset_everything",
+        "description": "Reset everything - clear memory and all expenses from database",
         "parameters": {}
     }
 ]

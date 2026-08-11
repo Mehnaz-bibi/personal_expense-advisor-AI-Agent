@@ -171,14 +171,14 @@ function quickAction(message) {
 
 // Reset memory function - Global function
 window.resetMemory = async function() {
-    console.log("Reset memory button clicked");
+    console.log("Reset everything button clicked");
 
-    if (!confirm("Are you sure you want to reset your memory? This will clear your conversation history and preferences.")) {
+    if (!confirm("⚠️ WARNING: This will DELETE ALL your expenses and conversation history!\n\nThis action cannot be undone.\n\nAre you sure you want to continue?")) {
         console.log("Reset cancelled by user");
         return;
     }
 
-    console.log("Proceeding with memory reset");
+    console.log("Proceeding with full reset");
 
     try {
         const response = await fetch('/api/reset-memory', {
@@ -194,17 +194,17 @@ window.resetMemory = async function() {
         console.log("Response data:", data);
 
         if (data.success) {
-            alert("Memory has been reset successfully!");
-            console.log("Memory reset successful, reloading page");
+            alert("✅ Complete Reset Successful!\n\n" + data.message);
+            console.log("Reset successful, reloading page");
             // Refresh the page to update UI
             location.reload();
         } else {
-            alert("Error resetting memory: " + data.error);
-            console.error("Memory reset failed:", data.error);
+            alert("❌ Error during reset: " + data.error);
+            console.error("Reset failed:", data.error);
         }
     } catch (error) {
-        alert("Error resetting memory: " + error);
-        console.error("Memory reset error:", error);
+        alert("❌ Error during reset: " + error);
+        console.error("Reset error:", error);
     }
 };
 

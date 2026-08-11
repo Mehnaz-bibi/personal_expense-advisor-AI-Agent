@@ -73,7 +73,8 @@ class ExpenseAgent:
             set_user_budget,
             get_user_budget,
             get_conversation_summary,
-            clear_memory
+            clear_memory,
+            reset_everything
         )
 
         return {
@@ -88,7 +89,8 @@ class ExpenseAgent:
             "set_user_budget": set_user_budget,
             "get_user_budget": get_user_budget,
             "get_conversation_summary": get_conversation_summary,
-            "clear_memory": clear_memory
+            "clear_memory": clear_memory,
+            "reset_everything": reset_everything
         }
 
     def process_message(self, user_message: str) -> str:
@@ -351,7 +353,7 @@ class ExpenseAgent:
 
     def _handle_clear_memory(self) -> str:
         """Handle clearing memory."""
-        result = self.tool_functions["clear_memory"]()
+        result = self.tool_functions["reset_everything"]()
         if result["success"]:
             return result["message"]
         else:
@@ -373,7 +375,7 @@ class ExpenseAgent:
 • Set default budget (e.g., "Set my budget to 40000")
 • Analyze patterns (e.g., "Where am I spending the most?")
 • Get suggestions (e.g., "Give me some money-saving tips")
-• Clear memory (e.g., "Clear my conversation history")
+• Reset everything (e.g., "Clear my conversation history and all expenses")
 
 What would you like to do?"""
 
