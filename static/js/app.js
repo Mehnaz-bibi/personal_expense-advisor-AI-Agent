@@ -169,6 +169,34 @@ function quickAction(message) {
     }
 }
 
+// Reset memory function
+async function resetMemory() {
+    if (!confirm("Are you sure you want to reset your memory? This will clear your conversation history and preferences.")) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/reset-memory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Memory has been reset successfully!");
+            // Refresh the page to update UI
+            location.reload();
+        } else {
+            alert("Error resetting memory: " + data.error);
+        }
+    } catch (error) {
+        alert("Error resetting memory: " + error);
+    }
+}
+
 // Initialize the app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     window.expenseAdvisor = new ExpenseAdvisor();

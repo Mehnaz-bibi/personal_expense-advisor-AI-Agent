@@ -249,6 +249,18 @@ main {
     transform: translateY(0);
 }
 
+.reset-btn {
+    background: #FFF5F5 !important;
+    border-color: #FED7D7 !important;
+    color: #C53030 !important;
+}
+
+.reset-btn:hover {
+    background: #FED7D7 !important;
+    border-color: #FC8181 !important;
+    color: #9B2C2C !important;
+}
+
 footer {
     background: #f8f9fa;
     padding: 20px;

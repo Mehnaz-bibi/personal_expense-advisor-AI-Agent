@@ -118,6 +118,17 @@ async def get_analysis():
         return {"success": False, "error": str(e)}
 
 
+@app.post("/api/reset-memory")
+async def reset_memory():
+    """Reset user memory."""
+    try:
+        from tools import clear_memory
+        result = clear_memory()
+        return {"success": True, "data": result}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
