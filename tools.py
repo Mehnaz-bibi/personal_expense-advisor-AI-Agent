@@ -6,6 +6,7 @@ Contains functions that the AI agent can call to perform actions.
 from typing import List, Dict, Optional
 from datetime import datetime
 from database import get_database
+from memory import get_memory_manager
 
 
 # Valid expense categories
@@ -375,6 +376,7 @@ def get_spending_suggestions(budget_limit: Optional[float] = None) -> Dict:
             return analysis
 
         suggestions = []
+        memory = get_memory_manager()
 
         # Suggestion based on highest category
         if analysis["highest_category"]["name"]:
@@ -391,6 +393,20 @@ def get_spending_suggestions(budget_limit: Optional[float] = None) -> Dict:
             suggestions.append(
                 f"Based on your average daily spending of Rs. {analysis['average_daily_spending']:.2f}, "
                 f"you're projected to spend Rs. {projected_monthly:,.2f} this month."
+            )
+
+        # Memory-based suggestions
+        patterns = memory.get_spending_patterns()
+        if patterns["most_common_category"]:
+            suggestions.append(
+                f"I notice you frequently spend on {patterns['most_common_category']}. "
+                f"This is your most common expense category."
+            )
+
+        if patterns["average_amount"] > 0:
+            suggestions.append(
+                f"Your average expense amount is Rs. {patterns['average_amount']:.2f}. "
+                f"Try to keep individual expenses below Rs. {patterns['average_amount'] * 1.5:.2f} when possible."
             )
 
         # Budget-specific suggestions
@@ -415,13 +431,114 @@ def get_spending_suggestions(budget_limit: Optional[float] = None) -> Dict:
         return {
             "success": True,
             "suggestions": suggestions,
-            "analysis": analysis
+            "analysis": analysis,
+            "memory_patterns": patterns
         }
 
     except Exception as e:
         return {
             "success": False,
             "error": f"Failed to generate suggestions: {str(e)}"
+        }
+
+
+def set_user_budget(budget: float) -> Dict:
+    """
+    Set the user's default budget in memory.
+
+    Args:
+        budget: Monthly budget amount
+
+    Returns:
+        Dictionary with success status
+    """
+    try:
+        memory = get_memory_manager()
+        memory.set_default_budget(budget)
+        return {
+            "success": True,
+            "message": f"Default budget set to Rs. {budget:,.2f}"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to set budget: {str(e)}"
+        }
+
+
+def get_user_budget() -> Dict:
+    """
+    Get the user's default budget from memory.
+
+    Returns:
+        Dictionary with budget information
+    """
+    try:
+        memory = get_memory_manager()
+        budget = memory.get_default_budget()
+        if budget:
+            return {
+                "success": True,
+                "budget": budget,
+                "message": f"Your default budget is Rs. {budget:,.2f}"
+            }
+        else:
+            return {
+                "success": True,
+                "budget": None,
+                "message": "No default budget set. You can set one with: 'Set my budget to 40000'"
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to get budget: {str(e)}"
+        }
+
+
+def get_conversation_summary() -> Dict:
+    """
+    Get a summary of recent conversations.
+
+    Returns:
+        Dictionary with conversation summary
+    """
+    try:
+        memory = get_memory_manager()
+        history = memory.get_conversation_history(limit=5)
+        patterns = memory.get_spending_patterns()
+
+        return {
+            "success": True,
+            "recent_conversations": len(history),
+            "total_conversations": patterns["total_conversations"],
+            "most_common_category": patterns["most_common_category"],
+            "average_amount": patterns["average_amount"]
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to get conversation summary: {str(e)}"
+        }
+
+
+def clear_memory() -> Dict:
+    """
+    Clear conversation history from memory.
+
+    Returns:
+        Dictionary with success status
+    """
+    try:
+        memory = get_memory_manager()
+        memory.clear_history()
+        return {
+            "success": True,
+            "message": "Conversation history has been cleared."
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to clear memory: {str(e)}"
         }
 
 
@@ -481,5 +598,27 @@ TOOLS_METADATA = [
         "parameters": {
             "budget_limit": {"type": "float", "description": "Optional budget limit for context", "required": False}
         }
+    },
+    {
+        "name": "set_user_budget",
+        "description": "Set the user's default budget in memory",
+        "parameters": {
+            "budget": {"type": "float", "description": "Monthly budget amount"}
+        }
+    },
+    {
+        "name": "get_user_budget",
+        "description": "Get the user's default budget from memory",
+        "parameters": {}
+    },
+    {
+        "name": "get_conversation_summary",
+        "description": "Get a summary of recent conversations",
+        "parameters": {}
+    },
+    {
+        "name": "clear_memory",
+        "description": "Clear conversation history from memory",
+        "parameters": {}
     }
 ]

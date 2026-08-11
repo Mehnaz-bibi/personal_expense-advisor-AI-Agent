@@ -1,0 +1,39 @@
+{
+  "user_id": "default",
+  "preferences": {
+    "default_budget": 40000,
+    "preferred_currency": "Rs.",
+    "date_format": "%Y-%m-%d",
+    "language": "en"
+  },
+  "context": {
+    "last_category": "transport",
+    "recent_amounts": [
+      500,
+      300,
+      1500
+    ],
+    "common_categories": {
+      "food": 4,
+      "transport": 2
+    },
+    "conversation_count": 2
+  },
+  "history": [
+    {
+      "timestamp": "2026-08-11T15:29:56.000194",
+      "user": "I spent 500 on lunch",
+      "agent": "Expense recorded successfully"
+    },
+    {
+      "timestamp": "2026-08-11T15:29:56.001470",
+      "user": "How much did I spend?",
+      "agent": "You spent Rs. 500 today"
+    }
+  ],
+  "user_profile": {
+    "name": null,
+    "location": null,
+    "timezone": null
+  }
+}

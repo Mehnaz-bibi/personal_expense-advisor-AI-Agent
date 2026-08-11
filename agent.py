@@ -9,6 +9,7 @@ from typing import Dict, List, Optional, Any
 from dotenv import load_dotenv
 from prompts import get_system_prompt, get_intent_prompt, get_tool_result_prompt
 from tools import TOOLS_METADATA, VALID_CATEGORIES
+from memory import get_memory_manager
 
 # Load environment variables
 load_dotenv()
@@ -24,6 +25,7 @@ class ExpenseAgent:
         self.tools = TOOLS_METADATA
         self.tool_functions = self._get_tool_functions()
         self.llm_client = self._initialize_llm_client()
+        self.memory = get_memory_manager()
 
     def _get_model_config(self) -> str:
         """Get the model configuration based on provider."""
@@ -67,7 +69,11 @@ class ExpenseAgent:
             calculate_total,
             check_budget,
             analyze_spending_patterns,
-            get_spending_suggestions
+            get_spending_suggestions,
+            set_user_budget,
+            get_user_budget,
+            get_conversation_summary,
+            clear_memory
         )
 
         return {
@@ -78,7 +84,11 @@ class ExpenseAgent:
             "calculate_total": calculate_total,
             "check_budget": check_budget,
             "analyze_spending_patterns": analyze_spending_patterns,
-            "get_spending_suggestions": get_spending_suggestions
+            "get_spending_suggestions": get_spending_suggestions,
+            "set_user_budget": set_user_budget,
+            "get_user_budget": get_user_budget,
+            "get_conversation_summary": get_conversation_summary,
+            "clear_memory": clear_memory
         }
 
     def process_message(self, user_message: str) -> str:
@@ -94,12 +104,17 @@ class ExpenseAgent:
         # Try to use LLM if available
         if self.llm_client:
             try:
-                return self._llm_response(user_message)
+                response = self._llm_response(user_message)
             except Exception as e:
                 print(f"LLM error: {e}, falling back to rule-based")
-                return self._rule_based_response(user_message)
-        # Fall back to rule-based approach
-        return self._rule_based_response(user_message)
+                response = self._rule_based_response(user_message)
+        else:
+            response = self._rule_based_response(user_message)
+
+        # Store conversation in memory
+        self.memory.add_conversation(user_message, response)
+
+        return response
 
     def _llm_response(self, user_message: str) -> str:
         """
@@ -149,13 +164,21 @@ class ExpenseAgent:
         elif self._is_asking_budget(message_lower):
             return self._handle_budget_query(message_lower)
 
+        # Check if user is setting budget
+        elif self._is_setting_budget(message_lower):
+            return self._handle_set_budget(user_message)
+
         # Check if user is asking for analysis
         elif self._is_asking_analysis(message_lower):
-            return self._handle_analysis_query(message_lower)
+            return self._handle_analysis_query(user_message)
 
         # Check if user is asking for suggestions
         elif self._is_asking_suggestions(message_lower):
             return self._handle_suggestions_query(message_lower)
+
+        # Check if user wants to clear memory
+        elif self._is_clearing_memory(message_lower):
+            return self._handle_clear_memory()
 
         # Default response
         else:
@@ -186,6 +209,16 @@ class ExpenseAgent:
         suggestion_keywords = ["suggest", "advice", "recommend", "save money", "tip"]
         return any(keyword in message for keyword in suggestion_keywords)
 
+    def _is_setting_budget(self, message: str) -> bool:
+        """Check if the user is setting a budget."""
+        budget_keywords = ["set my budget", "set budget", "my budget is", "default budget"]
+        return any(keyword in message for keyword in budget_keywords)
+
+    def _is_clearing_memory(self, message: str) -> bool:
+        """Check if the user wants to clear memory."""
+        clear_keywords = ["clear memory", "clear history", "forget everything", "reset memory"]
+        return any(keyword in message for keyword in clear_keywords)
+
     def _handle_add_expense(self, message: str) -> str:
         """Handle adding an expense from natural language."""
         # Simple pattern matching for demo purposes
@@ -203,6 +236,10 @@ class ExpenseAgent:
 
         # Use the rest as description
         description = message
+
+        # Remember the category and amount in memory
+        self.memory.remember_category(category)
+        self.memory.remember_amount(amount)
 
         # Call the add_expense tool
         result = self.tool_functions["add_expense"](
@@ -300,15 +337,43 @@ class ExpenseAgent:
         else:
             return f"Error: {result['error']}"
 
-    def _default_response(self, message: str) -> str:
+    def _handle_set_budget(self, user_message: str) -> str:
+        """Handle setting a default budget."""
+        amount = self._extract_amount(user_message)
+        if amount is None:
+            return "Please specify the budget amount. For example: 'Set my budget to 40000'"
+
+        result = self.tool_functions["set_user_budget"](amount)
+        if result["success"]:
+            return result["message"]
+        else:
+            return f"Error: {result['error']}"
+
+    def _handle_clear_memory(self) -> str:
+        """Handle clearing memory."""
+        result = self.tool_functions["clear_memory"]()
+        if result["success"]:
+            return result["message"]
+        else:
+            return f"Error: {result['error']}"
+
+    def _default_response(self, user_message: str) -> str:
         """Handle general messages."""
+        # Check if user wants to know their current budget
+        if "my budget" in user_message.lower() and "what" in user_message.lower():
+            result = self.tool_functions["get_user_budget"]()
+            if result["success"]:
+                return result["message"]
+
         return """I'm your Personal Expense Advisor. I can help you:
 
 • Add expenses (e.g., "I spent 500 on lunch")
 • Check your spending (e.g., "How much did I spend this month?")
 • Budget tracking (e.g., "My budget is 40000")
+• Set default budget (e.g., "Set my budget to 40000")
 • Analyze patterns (e.g., "Where am I spending the most?")
 • Get suggestions (e.g., "Give me some money-saving tips")
+• Clear memory (e.g., "Clear my conversation history")
 
 What would you like to do?"""
 

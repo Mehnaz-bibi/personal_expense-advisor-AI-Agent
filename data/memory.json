@@ -1,0 +1,21 @@
+{
+  "user_id": "default",
+  "preferences": {
+    "default_budget": 50000,
+    "preferred_currency": "Rs.",
+    "date_format": "%Y-%m-%d",
+    "language": "en"
+  },
+  "context": {
+    "last_category": null,
+    "recent_amounts": [],
+    "common_categories": {},
+    "conversation_count": 0
+  },
+  "history": [],
+  "user_profile": {
+    "name": null,
+    "location": null,
+    "timezone": null
+  }
+}
