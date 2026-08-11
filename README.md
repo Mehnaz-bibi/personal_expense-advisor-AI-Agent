@@ -40,39 +40,62 @@ A single AI agent that helps users record, analyze, and understand their persona
 ```
 personal-expense-advisor/
 ├── main.py              # CLI application entry point
+├── app.py               # FastAPI web application
 ├── agent.py             # Agent logic and tool calling
 ├── tools.py             # Tool functions (add_expense, get_expenses, etc.)
 ├── database.py          # SQLite database operations
 ├── prompts.py           # System prompts and agent instructions
 ├── requirements.txt     # Python dependencies
 ├── .env                 # Environment configuration
-├── demo.py              # Demo script (recommended first step)
+├── demo.py              # Demo script
 ├── test_tools.py        # Tool testing script
 ├── test_agent.py        # Agent testing script
+├── test_web.py          # Web API testing script
 ├── README.md            # This file
+├── static/              # Static files for web UI
+│   ├── css/
+│   │   └── style.css    # Styling
+│   └── js/
+│       └── app.js       # Frontend JavaScript
+├── templates/           # HTML templates
+│   └── index.html       # Main web interface
 └── data/
     └── expenses.db      # SQLite database (created automatically)
 ```
 
 ## 🎮 Usage
 
-### Quick Demo (Recommended First Step)
+### Option 1: Web UI (Recommended)
 
-Run the demo to see the application in action:
+Run the web interface:
 ```bash
-python demo.py
+python app.py
 ```
 
-This will show a sample conversation with all features working.
+Then open your browser to: `http://localhost:8000`
 
-### Starting the Interactive CLI
+**Web UI Features:**
+- Beautiful chat interface with AI agent
+- Real-time dashboard with spending statistics
+- Quick action buttons for common tasks
+- Responsive design for mobile and desktop
+- Auto-refreshing dashboard
 
-Run the CLI application for interactive use:
+### Option 2: CLI Application
+
+Run the CLI application for terminal use:
 ```bash
 python main.py
 ```
 
-**Note**: The CLI requires interactive terminal input. It won't work in background mode or non-interactive environments.
+**Note**: The CLI requires interactive terminal input.
+
+### Option 3: Quick Demo
+
+Run the demo to see sample conversations:
+```bash
+python demo.py
+```
 
 ### Example Conversations
 
@@ -132,7 +155,16 @@ The agent automatically categorizes expenses into these categories:
 
 ## 🧪 Testing
 
-### Run Demo (Recommended)
+### Test Web API
+```bash
+# Start the server first
+python app.py
+
+# In another terminal, test the API
+python test_web.py
+```
+
+### Run Demo
 ```bash
 python demo.py
 ```

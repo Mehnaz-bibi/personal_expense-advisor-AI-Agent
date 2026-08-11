@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Expense Advisor - AI Agent</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 Personal Expense Advisor</h1>
+            <p>Track, analyze, and understand your expenses with AI</p>
+        </header>
+
+        <main>
+            <div class="chat-section">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message agent">
+                        <p>Hello! I'm your Personal Expense Advisor. I can help you:</p>
+                        <ul>
+                            <li>Add expenses (e.g., "I spent 500 on lunch")</li>
+                            <li>Check spending (e.g., "How much did I spend this month?")</li>
+                            <li>Budget tracking (e.g., "My budget is 40000")</li>
+                            <li>Get analysis and suggestions</li>
+                        </ul>
+                        <p>What would you like to do today?</p>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <input
+                        type="text"
+                        id="userInput"
+                        placeholder="e.g., 'I spent 500 on lunch today'"
+                        autocomplete="off"
+                    >
+                    <button id="sendBtn">Send</button>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="stat-card">
+                    <h3>This Month</h3>
+                    <p class="stat-value" id="monthlyTotal">Rs. 0</p>
+                    <p class="stat-subtitle" id="monthlyCount">0 expenses</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Today</h3>
+                    <p class="stat-value" id="todayTotal">Rs. 0</p>
+                    <p class="stat-subtitle" id="todayCount">0 expenses</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Budget Status</h3>
+                    <p class="stat-value" id="budgetStatus">Set Budget</p>
+                    <p class="stat-subtitle" id="budgetPercentage">0% used</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="quick-btn" onclick="quickAction('I spent 500 on lunch today')">
+                    🍔 Add Lunch Expense
+                </button>
+                <button class="quick-btn" onclick="quickAction('How much did I spend this month?')">
+                    📊 Monthly Spending
+                </button>
+                <button class="quick-btn" onclick="quickAction('My budget is 40000')">
+                    💰 Check Budget
+                </button>
+                <button class="quick-btn" onclick="quickAction('Give me some suggestions')">
+                    💡 Get Suggestions
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by AI Agent • Built with Python, FastAPI & SQLite</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
